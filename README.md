@@ -1,20 +1,49 @@
-# Welcome to your Expo app 👋
+# threeD - Social Media Platform
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A modern social media platform built with React Native, Expo, and Convex.
 
-## Get started
+## Features
 
-1. Install dependencies
+- Authentication with Clerk
+- Image and video uploads
+- Real-time feed updates
+- Like and bookmark posts
+- User profiles with follow system
+- Cross-platform (iOS & Android)
 
-   ```bash
-   npm install
-   ```
+## Getting Started
 
-2. Start the app
+1. Clone the repository
+2. Install dependencies:
+```bash
+npm install
+```
 
-   ```bash
-    npx expo start
-   ```
+3. Set up environment variables:
+Create a `.env` file with:
+```bash 
+EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_key
+EXPO_PUBLIC_CONVEX_URL=your_convex_url
+CLERK_WEBHOOK_SECRET=your_webhook_secret
+```
+
+4. Configure Clerk:
+   - Create a Clerk account at https://clerk.dev
+   - Set up OAuth with Google
+   - Configure webhook endpoints
+   - Add your development URLs to allowed origins
+
+5. Configure Convex:
+   - Create a Convex account at https://convex.dev
+   - Create a new project
+   - Copy your deployment URL
+   - Run `npx convex dev` to start the dev server
+
+## Start the app
+
+```bash
+npx expo start
+```
 
 In the output, you'll find options to open the app in a
 
