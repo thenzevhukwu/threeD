@@ -24,7 +24,6 @@ const NoPostsFound = () => (
 );
 
 export default function ProfileScreen() {
-  // Declare all hooks first
   const [selectedTab, setSelectedTab] = useState('Posts');
   const [refreshToken, setRefreshToken] = useState(Date.now());
   const [refreshing, setRefreshing] = useState(false);
@@ -32,7 +31,11 @@ export default function ProfileScreen() {
   const user = useQuery(api.users.getCurrentUser);
   const posts = useQuery(api.posts.getFeedPosts, { refreshToken });
 
-  // Define callbacks
+  // Memoize filtered posts
+  const userPosts = React.useMemo(() => {
+    return posts?.filter(post => post.author._id === user?._id) ?? [];
+  }, [posts, user?._id]);
+
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     setRefreshToken(Date.now());
@@ -41,16 +44,7 @@ export default function ProfileScreen() {
     }, 500);
   }, []);
 
-  // Early returns for loading/error states
-  if (!user || !posts) {
-    return <Loader />;
-  }
-
-  // Prepare data
-  const userPosts = posts.filter(post => post.author._id === user._id);
-  
-  // Render helpers
-  const renderTabContent = () => {
+  const renderTabContent = useCallback(() => {
     switch (selectedTab) {
       case 'Posts':
         if (userPosts.length === 0) {
@@ -58,6 +52,7 @@ export default function ProfileScreen() {
         }
         return (
           <ScrollView
+            showsVerticalScrollIndicator={false}
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}
@@ -97,9 +92,12 @@ export default function ProfileScreen() {
       default:
         return null;
     }
-  };
+  }, [selectedTab, userPosts, refreshing, onRefresh]);
 
-  // Main render
+  if (!user || !posts) {
+    return <Loader />;
+  }
+
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
       {/* Header */}

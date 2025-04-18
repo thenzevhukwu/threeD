@@ -32,8 +32,25 @@ export default function TabLayout() {
         name="create"
         options={{
           title: '',
+          tabBarHideOnKeyboard: true,
           tabBarIcon: ({ color, size, focused }) =>
             <Ionicons name={focused ? 'add' : 'add-outline'} size={size} color={color} />
+        }}
+      />
+      <Tabs.Screen
+        name="bookmark"
+        options={{
+          title: '',
+          tabBarIcon: ({ color, size, focused }) =>
+            <Ionicons name={focused ? 'bookmark' : 'bookmark-outline'} size={size} color={color} />
+        }}
+      />
+      <Tabs.Screen
+        name="test"
+        options={{
+          title: '',
+          tabBarIcon: ({ color, size, focused }) =>
+            <Ionicons name={focused ? 'build' : 'build-outline'} size={size} color={color} />
         }}
       />
     </Tabs>

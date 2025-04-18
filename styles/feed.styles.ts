@@ -310,4 +310,67 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: theme.surface,
   },
+
+
+  // Post Popup Styles
+  optionButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 10,
+  },
+  optionText: {
+    fontSize: 14,
+  },
+
+
+
+  overlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  dialog: {
+    backgroundColor: '#1a1a1a',
+    borderRadius: 12,
+    padding: 20,
+    width: '80%',
+    maxWidth: 340,
+  },
+  dialogTitle: {
+    color: theme.white,
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 12,
+  },
+  dialogMessage: {
+    color: theme.textSecondary,
+    marginBottom: 20,
+    lineHeight: 20,
+  },
+  dialogButtons: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: 12,
+  },
+  buttonCancel: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 6,
+  },
+  buttonDelete: {
+    backgroundColor: theme.accent,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 6,
+  },
+  buttonTextCancel: {
+    color: theme.white,
+    fontWeight: '600',
+  },
+  buttonTextDelete: {
+    color: theme.white,
+    fontWeight: '600',
+  },
+  
 });

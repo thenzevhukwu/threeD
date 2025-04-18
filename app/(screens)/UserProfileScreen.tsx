@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useQuery, useMutation } from 'convex/react';
@@ -15,28 +15,33 @@ export default function UserProfileScreen() {
   const { userId } = useLocalSearchParams();
   const router = useRouter();
   const [selectedTab, setSelectedTab] = useState('Posts');
+  const [refreshToken, setRefreshToken] = useState(Date.now());
 
+  // Query user data
   const user = useQuery(api.users.getUser, { userId: userId as Id<"users"> });
   const isFollowing = useQuery(api.users.isFollowing, { userId: userId as Id<"users"> });
+  const posts = useQuery(api.posts.getFeedPosts, { refreshToken });
   const toggleFollow = useMutation(api.users.toggleFollow);
-  const posts = useQuery(api.posts.getFeedPosts, {refreshToken: Date.now()});
 
-  if (!user || isFollowing === undefined || !posts) return <Loader />;
-
-  const handleFollow = async () => {
+  const handleFollow = useCallback(async () => {
     try {
-      await toggleFollow({ userId: userId as Id<"users"> });
+      await toggleFollow({ userId: userId as Id<"users"> })
     } catch (error) {
       console.error('Error toggling follow:', error);
     }
-  };
+  }, [userId, toggleFollow]);
 
-  const renderTabContent = () => {
+  // Memoize filtered posts
+  const userPosts = React.useMemo(() => {
+    return posts?.filter(post => post.author._id === userId) ?? [];
+  }, [posts, userId]);
+
+  const renderTabContent = useCallback(() => {
     switch (selectedTab) {
       case 'Posts':
         return (
           <ScrollView>
-            {posts?.filter(post => post.author._id === userId).map((post) => (
+            {userPosts.map((post) => (
               <Post key={post._id} post={post} />
             ))}
           </ScrollView>
@@ -47,9 +52,12 @@ export default function UserProfileScreen() {
             <Text style={styles.emptyText}>No replies yet.</Text>
           </View>
         );
-      // ...existing cases...
+      default:
+        return null;
     }
-  };
+  }, [selectedTab, userPosts]);
+
+  if (!user || isFollowing === undefined || !posts) return <Loader />;
 
   return (
     <View style={styles.container}>

@@ -1,12 +1,6 @@
 import { Appearance } from 'react-native';
 
 const colorscheme = Appearance.getColorScheme();
-const isDark = Appearance.getColorScheme() === 'dark';
-const isLight = Appearance.getColorScheme() === 'light';
-
-if (colorscheme === 'dark') {
-  console.log('Dark mode is enabled');
-}
 
 const lightTheme = {
   primary: "#FF6B00",
@@ -36,10 +30,10 @@ const darkTheme = {
   surfaceLight: "#2A2A2A",
   white: "#EAEAEA",
   grey: "#B0B0B0",
-  accent: "#E94560",
+  accent: "#bf1733",
   text: "#EAEAEA",
   textSecondary: "#B0B0B0",
-  error: "#E94560",
+  error: "#bf1733",
   inputBackground: '#1E1E1E',
   inputBorder: '#333333',
   inputText: '#FFFFFF',
@@ -48,4 +42,4 @@ const darkTheme = {
   linkText: '#B0B0B0',
 };
 
-export const theme = isDark ? darkTheme : lightTheme;
+export const theme = colorscheme === 'dark' ? darkTheme : lightTheme;
