@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "HelloWorld",
-    "slug": "expo-template-default",
+    "name": "threeD",
+    "slug": "threed",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -9,13 +9,15 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.nzevh.threed"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.nzevh.threed"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +38,18 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "eas": {
+        "projectId": "32ff636b-e3cc-42e0-8e99-dddf767037b7"
+      }
+    },
+    "owner": "nzevh",
+    "updates": {
+      "url": "https://u.expo.dev/32ff636b-e3cc-42e0-8e99-dddf767037b7"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
     }
   }
 }
