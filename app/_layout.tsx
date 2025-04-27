@@ -1,39 +1,29 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+import React from 'react';
+import { StatusBar } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { MenuProvider } from 'react-native-popup-menu';
+import { Slot } from 'expo-router';
+import { PaperProvider } from 'react-native-paper';
+import ClerkAndConvexProviders from '@/providers/ClerkAndConvexProviders';
+import { theme } from '@/constants/theme';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
-
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
-    return null;
-  }
-
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <ClerkAndConvexProviders>
+      <PaperProvider>
+        <SafeAreaProvider>
+          <StatusBar 
+            barStyle="default" // Options: 'dark-content', 'light-content', 'default'
+            backgroundColor={theme.background} // Android only
+            translucent={false} // Android only
+          />
+          <SafeAreaView style={{flex: 1, backgroundColor: theme.background}}>
+            <MenuProvider>
+              <Slot />
+            </MenuProvider>
+          </SafeAreaView>
+        </SafeAreaProvider>
+      </PaperProvider>
+    </ClerkAndConvexProviders>
   );
 }
